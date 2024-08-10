@@ -8,7 +8,7 @@ import SearchBar from './SearchBar';
 import StorySkeletonList from './StorySkeletonList';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { ReloadIcon } from '@radix-ui/react-icons';
+import { RefreshCw } from 'lucide-react';
 
 const fetchStories = async (searchQuery = '') => {
   const url = searchQuery
@@ -36,7 +36,7 @@ const HackerNewsApp = () => {
         <AlertTitle>Error</AlertTitle>
         <AlertDescription>{error.message}</AlertDescription>
         <Button onClick={() => refetch()} className="mt-4">
-          <ReloadIcon className="mr-2 h-4 w-4" /> Retry
+          <RefreshCw className="mr-2 h-4 w-4" /> Retry
         </Button>
       </Alert>
     );
