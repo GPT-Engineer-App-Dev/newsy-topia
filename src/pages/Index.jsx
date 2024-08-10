@@ -10,7 +10,7 @@ const Index = () => {
       <div className="min-h-screen bg-black text-white">
         <header className="bg-verge-red py-4">
           <div className="container mx-auto px-4">
-            <h1 className="text-4xl font-bold tracking-tight">Hacker News Top 100</h1>
+            <h1 className="text-4xl font-bold tracking-tight">Hacker News!</h1>
           </div>
         </header>
         <nav className="bg-verge-darkBlue py-2">
