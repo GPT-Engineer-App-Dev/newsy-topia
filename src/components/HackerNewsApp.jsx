@@ -4,19 +4,24 @@ import FeaturedStory from './FeaturedStory';
 import TopStories from './TopStories';
 import StoryStream from './StoryStream';
 import MostPopular from './MostPopular';
+import SearchBar from './SearchBar';
 
-const fetchTopStories = async () => {
-  const response = await fetch('https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=100');
+const fetchStories = async (searchQuery = '') => {
+  const url = searchQuery
+    ? `https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(searchQuery)}&hitsPerPage=100`
+    : 'https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=100';
+  const response = await fetch(url);
   if (!response.ok) {
-    throw new Error('Failed to fetch top stories');
+    throw new Error('Failed to fetch stories');
   }
   return response.json();
 };
 
 const HackerNewsApp = () => {
+  const [searchQuery, setSearchQuery] = useState('');
   const { data, isLoading, error } = useQuery({
-    queryKey: ['topStories'],
-    queryFn: fetchTopStories,
+    queryKey: ['stories', searchQuery],
+    queryFn: () => fetchStories(searchQuery),
   });
 
   if (isLoading) return <div>Loading...</div>;
@@ -29,14 +34,17 @@ const HackerNewsApp = () => {
   const mostPopularStories = stories.slice(10, 13);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8">
-      <div className="lg:w-2/3">
-        <FeaturedStory story={featuredStory} />
-        <StoryStream stories={storyStreamStories} />
-      </div>
-      <div className="lg:w-1/3">
-        <TopStories stories={topStories} />
-        <MostPopular stories={mostPopularStories} />
+    <div>
+      <SearchBar onSearch={setSearchQuery} />
+      <div className="flex flex-col lg:flex-row gap-8">
+        <div className="lg:w-2/3">
+          <FeaturedStory story={featuredStory} />
+          <StoryStream stories={storyStreamStories} />
+        </div>
+        <div className="lg:w-1/3">
+          <TopStories stories={topStories} />
+          <MostPopular stories={mostPopularStories} />
+        </div>
       </div>
     </div>
   );
