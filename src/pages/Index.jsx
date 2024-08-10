@@ -12,15 +12,15 @@ const Index = () => {
         <header className="bg-black py-4 border-b border-gray-800">
           <div className="container mx-auto px-4">
             <nav className="flex justify-center items-center space-x-6 text-sm">
-              <h1 className="text-2xl font-bold tracking-tighter">TheVerge</h1>
+              <h1 className="text-2xl font-bold tracking-tighter">HackerNews</h1>
               <span>/</span>
               <span>Tech</span>
               <span>/</span>
-              <span>Reviews</span>
+              <span>Startups</span>
+              <span>/</span>
+              <span>Programming</span>
               <span>/</span>
               <span>Science</span>
-              <span>/</span>
-              <span>Entertainment</span>
               <span>/</span>
               <span>AI</span>
               <span>/</span>
@@ -35,7 +35,7 @@ const Index = () => {
         </main>
         <footer className="bg-black py-6 mt-12 border-t border-gray-800">
           <div className="container mx-auto px-4 text-center text-gray-400 text-sm">
-            <p>&copy; 2023 The Verge x Hacker News. All rights reserved.</p>
+            <p>&copy; 2023 Hacker News. All rights reserved.</p>
           </div>
         </footer>
       </div>

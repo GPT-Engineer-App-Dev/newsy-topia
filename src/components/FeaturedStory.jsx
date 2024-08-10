@@ -4,7 +4,7 @@ const FeaturedStory = ({ story }) => {
   return (
     <div className="mb-12 relative">
       <div className="absolute left-0 top-0 bottom-0 w-1/4 bg-black flex items-center">
-        <h1 className="text-6xl font-bold transform -rotate-90 whitespace-nowrap">The Verge</h1>
+        <h1 className="text-6xl font-bold transform -rotate-90 whitespace-nowrap">Hacker News</h1>
       </div>
       <img src="/placeholder.svg" alt="Featured story" className="w-3/4 ml-auto h-96 object-cover mb-4" />
       <div className="ml-auto w-3/4">
