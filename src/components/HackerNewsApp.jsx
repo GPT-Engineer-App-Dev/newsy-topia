@@ -5,6 +5,10 @@ import TopStories from './TopStories';
 import StoryStream from './StoryStream';
 import MostPopular from './MostPopular';
 import SearchBar from './SearchBar';
+import StorySkeletonList from './StorySkeletonList';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { ReloadIcon } from '@radix-ui/react-icons';
 
 const fetchStories = async (searchQuery = '') => {
   const url = searchQuery
@@ -19,13 +23,24 @@ const fetchStories = async (searchQuery = '') => {
 
 const HackerNewsApp = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ['stories', searchQuery],
     queryFn: () => fetchStories(searchQuery),
   });
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (isLoading) return <StorySkeletonList />;
+
+  if (error) {
+    return (
+      <Alert variant="destructive">
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>{error.message}</AlertDescription>
+        <Button onClick={() => refetch()} className="mt-4">
+          <ReloadIcon className="mr-2 h-4 w-4" /> Retry
+        </Button>
+      </Alert>
+    );
+  }
 
   const stories = data?.hits || [];
   const featuredStory = stories[0];
