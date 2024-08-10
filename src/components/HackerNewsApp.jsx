@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Search } from 'lucide-react';
+import { Search, Zap } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import StoryList from './StoryList';
 import StorySkeletonList from './StorySkeletonList';
+import FeaturedStory from './FeaturedStory';
 
 const fetchTopStories = async () => {
   const response = await fetch('https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=100');
@@ -24,6 +25,9 @@ const HackerNewsApp = () => {
   const filteredStories = data?.hits.filter(story =>
     story.title.toLowerCase().includes(searchTerm.toLowerCase())
   ) || [];
+
+  const featuredStory = filteredStories[0];
+  const remainingStories = filteredStories.slice(1);
 
   if (error) {
     return <div className="text-verge-red">Error: {error.message}</div>;
@@ -47,7 +51,14 @@ const HackerNewsApp = () => {
       {isLoading ? (
         <StorySkeletonList />
       ) : (
-        <StoryList stories={filteredStories} />
+        <>
+          {featuredStory && <FeaturedStory story={featuredStory} />}
+          <div className="mt-8 flex items-center">
+            <Zap className="text-verge-red mr-2" />
+            <h2 className="text-2xl font-bold">Latest Stories</h2>
+          </div>
+          <StoryList stories={remainingStories} />
+        </>
       )}
     </div>
   );
