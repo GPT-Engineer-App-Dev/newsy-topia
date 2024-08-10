@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import StoryList from './StoryList';
-import StorySkeletonList from './StorySkeletonList';
 import FeaturedStory from './FeaturedStory';
+import TopStories from './TopStories';
+import StoryStream from './StoryStream';
+import MostPopular from './MostPopular';
 
 const fetchTopStories = async () => {
   const response = await fetch('https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=100');
@@ -16,46 +14,30 @@ const fetchTopStories = async () => {
 };
 
 const HackerNewsApp = () => {
-  const [searchTerm, setSearchTerm] = useState('');
   const { data, isLoading, error } = useQuery({
     queryKey: ['topStories'],
     queryFn: fetchTopStories,
   });
 
-  const filteredStories = data?.hits.filter(story =>
-    story.title.toLowerCase().includes(searchTerm.toLowerCase())
-  ) || [];
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
-  const featuredStory = filteredStories[0];
-  const remainingStories = filteredStories.slice(1);
-
-  if (error) {
-    return <div className="text-red-500">Error: {error.message}</div>;
-  }
+  const stories = data?.hits || [];
+  const featuredStory = stories[0];
+  const topStories = stories.slice(1, 6);
+  const storyStreamStories = stories.slice(6, 10);
+  const mostPopularStories = stories.slice(10, 13);
 
   return (
-    <div>
-      <div className="mb-6 flex">
-        <Input
-          type="text"
-          placeholder="Search stories..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="mr-2 bg-gray-900 text-white border-gray-700 focus:border-purple-500"
-        />
-        <Button variant="outline" className="bg-purple-600 text-white hover:bg-purple-700">
-          <Search className="h-4 w-4 mr-2" />
-          Search
-        </Button>
+    <div className="flex flex-col lg:flex-row gap-8">
+      <div className="lg:w-2/3">
+        <FeaturedStory story={featuredStory} />
+        <StoryStream stories={storyStreamStories} />
       </div>
-      {isLoading ? (
-        <StorySkeletonList />
-      ) : (
-        <>
-          {featuredStory && <FeaturedStory story={featuredStory} />}
-          <StoryList stories={remainingStories} />
-        </>
-      )}
+      <div className="lg:w-1/3">
+        <TopStories stories={topStories} />
+        <MostPopular stories={mostPopularStories} />
+      </div>
     </div>
   );
 };
