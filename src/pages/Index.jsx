@@ -1,8 +1,7 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import HackerNewsApp from '../components/HackerNewsApp';
-import { Menu } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { MoreHorizontal } from 'lucide-react';
 
 const queryClient = new QueryClient();
 
@@ -10,36 +9,34 @@ const Index = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-black text-white">
-        <header className="bg-verge-red py-4">
-          <div className="container mx-auto px-4 flex justify-between items-center">
-            <h1 className="text-4xl font-bold tracking-tight">Hacker News!</h1>
-            <Button variant="ghost" className="text-white">
-              <Menu className="h-6 w-6" />
-            </Button>
+        <header className="bg-black py-4 border-b border-gray-800">
+          <div className="container mx-auto px-4">
+            <nav className="flex justify-between items-center">
+              <h1 className="text-2xl font-bold tracking-tighter">The Verge</h1>
+              <ul className="hidden md:flex space-x-6 text-sm">
+                <li>Tech</li>
+                <li>Reviews</li>
+                <li>Science</li>
+                <li>Entertainment</li>
+                <li>AI</li>
+                <li className="flex items-center">
+                  More <MoreHorizontal className="h-4 w-4 ml-1" />
+                </li>
+              </ul>
+            </nav>
           </div>
         </header>
-        <nav className="bg-verge-darkBlue py-2">
-          <div className="container mx-auto px-4">
-            <ul className="flex space-x-4 overflow-x-auto">
-              <li className="text-verge-lightBlue hover:text-white transition-colors whitespace-nowrap">Top Stories</li>
-              <li className="text-verge-lightBlue hover:text-white transition-colors whitespace-nowrap">New</li>
-              <li className="text-verge-lightBlue hover:text-white transition-colors whitespace-nowrap">Ask HN</li>
-              <li className="text-verge-lightBlue hover:text-white transition-colors whitespace-nowrap">Show HN</li>
-              <li className="text-verge-lightBlue hover:text-white transition-colors whitespace-nowrap">Jobs</li>
-            </ul>
+        <main className="container mx-auto py-8 px-4 flex flex-col lg:flex-row gap-8">
+          <div className="lg:w-2/3">
+            <HackerNewsApp />
           </div>
-        </nav>
-        <div className="bg-gradient-to-r from-verge-red to-verge-darkBlue py-12">
-          <div className="container mx-auto px-4">
-            <h2 className="text-5xl font-bold mb-4">Top Tech Stories</h2>
-            <p className="text-xl">Curated by the Hacker News community, styled by The Verge</p>
-          </div>
-        </div>
-        <main className="container mx-auto py-8 px-4">
-          <HackerNewsApp />
+          <aside className="lg:w-1/3">
+            <h2 className="text-xl font-bold mb-4">Top Stories</h2>
+            {/* Top stories will be populated here */}
+          </aside>
         </main>
-        <footer className="bg-verge-darkBlue py-6 mt-12">
-          <div className="container mx-auto px-4 text-center text-verge-lightBlue">
+        <footer className="bg-black py-6 mt-12 border-t border-gray-800">
+          <div className="container mx-auto px-4 text-center text-gray-400 text-sm">
             <p>&copy; 2023 The Verge x Hacker News. All rights reserved.</p>
           </div>
         </footer>

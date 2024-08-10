@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Search, Zap } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import StoryList from './StoryList';
@@ -30,7 +30,7 @@ const HackerNewsApp = () => {
   const remainingStories = filteredStories.slice(1);
 
   if (error) {
-    return <div className="text-verge-red">Error: {error.message}</div>;
+    return <div className="text-red-500">Error: {error.message}</div>;
   }
 
   return (
@@ -41,9 +41,9 @@ const HackerNewsApp = () => {
           placeholder="Search stories..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="mr-2 bg-gray-800 text-white border-gray-700 focus:border-verge-lightBlue"
+          className="mr-2 bg-gray-900 text-white border-gray-700 focus:border-purple-500"
         />
-        <Button variant="outline" className="bg-verge-darkBlue text-white hover:bg-verge-lightBlue hover:text-black">
+        <Button variant="outline" className="bg-purple-600 text-white hover:bg-purple-700">
           <Search className="h-4 w-4 mr-2" />
           Search
         </Button>
@@ -53,10 +53,6 @@ const HackerNewsApp = () => {
       ) : (
         <>
           {featuredStory && <FeaturedStory story={featuredStory} />}
-          <div className="mt-8 flex items-center">
-            <Zap className="text-verge-red mr-2" />
-            <h2 className="text-2xl font-bold">Latest Stories</h2>
-          </div>
           <StoryList stories={remainingStories} />
         </>
       )}
