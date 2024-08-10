@@ -26,7 +26,7 @@ const HackerNewsApp = () => {
   ) || [];
 
   if (error) {
-    return <div className="text-red-500">Error: {error.message}</div>;
+    return <div className="text-verge-red">Error: {error.message}</div>;
   }
 
   return (
@@ -37,9 +37,9 @@ const HackerNewsApp = () => {
           placeholder="Search stories..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="mr-2"
+          className="mr-2 bg-gray-800 text-white border-gray-700 focus:border-verge-lightBlue"
         />
-        <Button variant="outline">
+        <Button variant="outline" className="bg-verge-darkBlue text-white hover:bg-verge-lightBlue hover:text-black">
           <Search className="h-4 w-4 mr-2" />
           Search
         </Button>
